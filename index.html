@@ -803,13 +803,22 @@ body.calm .garland .gorn{animation:none}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #bukety{--div-bg:#121a18}}
 :root[data-theme="dark"] #bukety{--div-bg:#121a18}
 /* wheat watermark */
-#bukety::before,#razom::before,#plan::before,#piny::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%23856a2a' stroke-width='2' stroke-linecap='round'><path d='M30 110 L30 40'/><path d='M30 50 q-10 -6 -10 -16 q10 4 10 16 M30 50 q10 -6 10 -16 q-10 4 -10 16 M30 66 q-10 -6 -10 -16 q10 4 10 16 M30 66 q10 -6 10 -16 q-10 4 -10 16 M30 82 q-10 -6 -10 -16 q10 4 10 16 M30 82 q10 -6 10 -16 q-10 4 -10 16'/><ellipse cx='100' cy='96' rx='22' ry='13'/><path d='M88 92 l6 -6 M98 94 l6 -6 M108 96 l6 -6'/></g></svg>");background-size:140px 140px}
+
 #bukety>.wrap,#razom>.wrap{position:relative}
 </style>
 <style>
-#dveri::before,#inshe::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'><path d='M30 110 L30 40'/><path d='M30 50 q-10 -6 -10 -16 q10 4 10 16 M30 50 q10 -6 10 -16 q-10 4 -10 16 M30 66 q-10 -6 -10 -16 q10 4 10 16 M30 66 q10 -6 10 -16 q-10 4 -10 16 M30 82 q-10 -6 -10 -16 q10 4 10 16 M30 82 q10 -6 10 -16 q-10 4 -10 16'/><ellipse cx='100' cy='96' rx='22' ry='13'/><path d='M88 92 l6 -6 M98 94 l6 -6 M108 96 l6 -6'/></g></svg>");background-size:140px 140px}
+
 #dveri>.wrap,#inshe>.wrap,#plan>.wrap,#piny>.wrap{position:relative}
 </style>
+<style>
+.wm{position:absolute;inset:0;z-index:0;pointer-events:none;clip-path:inset(0);-webkit-clip-path:inset(0)}
+.wm::before{content:"";position:fixed;inset:0;opacity:.05;background-size:140px 140px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%23856a2a' stroke-width='2' stroke-linecap='round'><path d='M30 110 L30 40'/><path d='M30 50 q-10 -6 -10 -16 q10 4 10 16 M30 50 q10 -6 10 -16 q-10 4 -10 16 M30 66 q-10 -6 -10 -16 q10 4 10 16 M30 66 q10 -6 10 -16 q-10 4 -10 16 M30 82 q-10 -6 -10 -16 q10 4 10 16 M30 82 q10 -6 10 -16 q-10 4 -10 16'/><ellipse cx='100' cy='96' rx='22' ry='13'/><path d='M88 92 l6 -6 M98 94 l6 -6 M108 96 l6 -6'/></g></svg>")}
+.wm.d::before{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'><path d='M30 110 L30 40'/><path d='M30 50 q-10 -6 -10 -16 q10 4 10 16 M30 50 q10 -6 10 -16 q-10 4 -10 16 M30 66 q-10 -6 -10 -16 q10 4 10 16 M30 66 q10 -6 10 -16 q-10 4 -10 16 M30 82 q-10 -6 -10 -16 q10 4 10 16 M30 82 q10 -6 10 -16 q-10 4 -10 16'/><ellipse cx='100' cy='96' rx='22' ry='13'/><path d='M88 92 l6 -6 M98 94 l6 -6 M108 96 l6 -6'/></g></svg>")}
+section>.wrap{position:relative;z-index:1}
+</style>
+<script>
+['bukety','razom','plan','piny','dveri','inshe'].forEach(id=>{const s=document.getElementById(id);if(!s)return;const d=document.createElement('div');d.className='wm'+(id==='dveri'||id==='inshe'?' d':'');d.setAttribute('aria-hidden','true');s.prepend(d)});
+</script>
 
 <div id="lb" hidden role="dialog" aria-label="Перегляд фото">
  <img alt="">
