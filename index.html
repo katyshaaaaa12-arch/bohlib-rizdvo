@@ -152,7 +152,7 @@ footer{background:var(--brand);color:var(--onbrand)}
 @keyframes swing{0%,100%{transform:rotate(9deg)}50%{transform:rotate(-9deg)}}
 @keyframes tw{0%,100%{opacity:1}50%{opacity:.2}}
 body.calm .spin,body.calm .swing,body.calm .tw{animation:none}
-@media (max-width:720px){.hero{grid-template-columns:1fr} .badge{width:150px;justify-self:end;margin-top:-8px}}
+@media (max-width:720px){.hero{grid-template-columns:1fr} .badge{position:absolute;right:max(16px,env(safe-area-inset-right,0px));top:118px;width:clamp(112px,33vw,150px)}}
 [hidden]{display:none!important}
 #lb{position:fixed;inset:0;background:rgba(10,16,14,.92);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
 #lb img{max-width:100%;max-height:100%;border-radius:4px}
@@ -521,7 +521,11 @@ openDB().then(async db=>{idb=db;const all=await idbAll();for(const o of all.sort
 #menu-shade{position:fixed;inset:0;z-index:24;background:rgba(10,16,14,.35)}
 #menu nav{display:grid;gap:2px;margin:0}
 #menu a{display:block;color:var(--fg);text-decoration:none;padding:10px 12px;border-radius:6px;font:600 16px var(--body);border:0;text-transform:none;letter-spacing:0}
-#menu a.sub{font-weight:400;font-size:15px;padding-left:28px;color:var(--muted)}
+#menu a.sub{font-weight:400;font-size:15px;padding:7px 12px 7px 26px;color:var(--fg)}
+#menu .mh{font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--velvet);padding:12px 12px 2px 26px}
+#menu a.grp{font-family:var(--display);font-weight:800;font-size:17px;margin-top:10px;border-top:1px solid var(--line);padding-top:16px;border-radius:0}
+#menu a.grp:first-child{margin-top:0;border-top:0;padding-top:10px}
+#menu a.liked::after{content:' ♥';color:var(--velvet)}
 #menu a:hover,#menu a:focus-visible{background:var(--bg);outline:none}
 #menu .mcount{float:right;font-size:13px;color:var(--velvet)}
 @media (prefers-reduced-motion:reduce){#menu-btn span,#menu-btn span::before,#menu-btn span::after{transition:none}}
@@ -529,26 +533,25 @@ openDB().then(async db=>{idb=db;const all=await idbAll();for(const o of all.sort
 <button type="button" id="menu-btn" aria-label="Меню" aria-expanded="false" aria-controls="menu"><span></span></button>
 <div id="menu-shade" hidden></div>
 <div id="menu" hidden role="dialog" aria-label="Меню сайту">
- <nav>
-  <a href="#bukety">Букети</a>
-  <a class="sub" href="#bukety">Букет 1 і Букет 2</a>
-  <a class="sub" href="#it-p8b">Ще приклади букетів</a>
-  <a href="#dveri">Двері</a>
-  <a class="sub" href="#it-door07">На стулки і ручку</a>
-  <a class="sub" href="#it-v5">Над дверима</a>
-  <a class="sub" href="#it-v8">Арки: 5 відео</a>
-  <a href="#inshe">Інше</a>
-  <a class="sub" href="#it-mirror">Дзеркало і балка</a>
-  <a class="sub" href="#it-v2">Ялинки і композиції</a>
-  <a href="#razom">Мій список <span class="mcount" id="m-count"></span></a>
-  <a href="#plan">План монтажу</a>
-  <a href="#piny">Pinterest</a>
- </nav>
+ <nav id="menu-nav"></nav>
 </div>
 <script>
 (function(){
+const nav=document.getElementById('menu-nav');
+function a(href,txt,cls){const x=document.createElement('a');x.href=href;x.textContent=txt;if(cls)x.className=cls;nav.appendChild(x);return x}
+const names={bukety:'Букети',dveri:'Двері',inshe:'Інше'};
+for(const id of ['bukety','dveri','inshe']){const sec=document.getElementById(id);if(!sec)continue;a('#'+id,names[id],'grp');
+  sec.querySelectorAll('h3.vsub, article.item').forEach(el=>{
+    if(el.matches('h3.vsub')){const d=document.createElement('div');d.className='mh';d.textContent=el.textContent.replace(/:.*$/,'');nav.appendChild(d)}
+    else{const h=el.querySelector('.txt > h3');if(h)a('#'+el.id,h.textContent,'sub').dataset.k=el.id.slice(3)}})}
+const l=a('#razom','Мій список ','grp');const sp=document.createElement('span');sp.className='mcount';sp.id='m-count';l.appendChild(sp);
+a('#plan','План монтажу','grp');a('#piny','Pinterest','grp');
+})();
+</script>
+<script>
+(function(){
 const b=document.getElementById('menu-btn'),m=document.getElementById('menu'),sh=document.getElementById('menu-shade');
-function set(o){m.hidden=!o;sh.hidden=!o;b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Закрити меню':'Меню');if(o){const c=document.getElementById('bar-txt').textContent.match(/\d+/);document.getElementById('m-count').textContent=c&&!document.getElementById('bar').hidden?c[0]:'';const f=m.querySelector('a');f&&f.focus()}}
+function set(o){m.hidden=!o;sh.hidden=!o;b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Закрити меню':'Меню');if(o){let P={};try{P=JSON.parse(localStorage.getItem('bohlib-picks-v1')||'{}')}catch(x){}m.querySelectorAll('a[data-k]').forEach(x=>x.classList.toggle('liked',!!P[x.dataset.k]));const c=document.getElementById('bar-txt').textContent.match(/\d+/);document.getElementById('m-count').textContent=c&&!document.getElementById('bar').hidden?c[0]:'';const f=m.querySelector('a');f&&f.focus()}}
 b.onclick=()=>set(m.hidden);sh.onclick=()=>set(false);
 m.addEventListener('click',e=>{if(e.target.closest('a'))set(false)});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!m.hidden){set(false);b.focus()}});
