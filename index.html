@@ -142,12 +142,12 @@ footer{background:var(--brand);color:var(--onbrand)}
 .brand-h .bo{width:calc(var(--lw)*.3584);height:auto;display:block}
 .brand-h span{font-family:"Playfair Display",Georgia,serif;font-weight:900;font-size:1em;line-height:1}
 .foot-logo{width:200px;max-width:100%;height:auto;display:block;margin-bottom:6px}
-.badge{all:unset;cursor:pointer;width:clamp(170px,22vw,240px);aspect-ratio:1;border-radius:50%;display:block;position:relative;z-index:1;filter:drop-shadow(0 10px 24px rgba(0,0,0,.3));transition:transform .3s}
-.badge:hover{transform:scale(1.04) rotate(-3deg)}
+.badge{all:unset;cursor:pointer;width:clamp(170px,22vw,240px);aspect-ratio:1;border-radius:50%;display:block;position:relative;z-index:1;filter:drop-shadow(0 10px 24px rgba(0,0,0,.3));}
+
 .badge:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
 .badge svg{width:100%;height:100%;display:block}
-.spin{transform-origin:100px 100px;animation:spin 22s linear infinite}
-.badge:hover .spin{animation-duration:8s}
+.spin{transform-origin:100px 100px}
+
 .swing{transform-origin:100px 118px;animation:swing 3.2s ease-in-out infinite}
 .tw{animation:tw 2.4s ease-in-out infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -156,8 +156,17 @@ footer{background:var(--brand);color:var(--onbrand)}
 body.calm .spin,body.calm .swing,body.calm .tw{animation:none}
 @media (max-width:720px){.hero{grid-template-columns:1fr} .badge{position:absolute;right:max(16px,env(safe-area-inset-right,0px));top:62px;width:88px} .hero{--lw:min(150px,40vw)} .motto{padding-right:96px}}
 [hidden]{display:none!important}
-#lb{position:fixed;inset:0;background:rgba(10,16,14,.92);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
-#lb img{max-width:100%;max-height:100%;border-radius:4px}
+#lb{position:fixed;inset:0;background:rgba(10,16,14,.94);display:grid;place-items:center;z-index:50;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+#lb img{max-width:min(100%,calc(100vw - 150px));max-height:calc(100vh - 110px);max-height:calc(100dvh - 110px);width:auto;height:auto;object-fit:contain;border-radius:4px;cursor:pointer;user-select:none}
+@media (max-width:720px){#lb img{max-width:100%;max-height:calc(100dvh - 150px)}}
+.lbb{position:absolute;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.14);cursor:pointer;display:grid;place-items:center}
+.lbb:hover,.lbb:focus-visible{background:rgba(255,255,255,.28);outline:none}
+.lbb svg{width:24px;height:24px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.lb-prev{left:max(12px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%)}
+.lb-next{right:max(12px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%)}
+.lb-x{right:max(12px,env(safe-area-inset-right,0px));top:max(12px,env(safe-area-inset-top,0px))}
+.lb-cap{position:absolute;left:0;right:0;bottom:max(14px,env(safe-area-inset-bottom,0px));text-align:center;color:#f3efe6;font-size:14px;display:flex;justify-content:center;gap:12px;padding:0 70px}
+.lb-n{opacity:.7;font-variant-numeric:tabular-nums}
 @media (max-width:720px){.gal{grid-template-columns:1fr} header .wrap{padding-block:40px 36px} section{padding-block:40px}}
 @media (prefers-reduced-motion:no-preference){figure img{transition:opacity .2s} figure img:hover{opacity:.92}}
 </style>
@@ -664,13 +673,43 @@ body.has-bar #totop{bottom:calc(72px + env(safe-area-inset-bottom,0px))}
 const f=()=>b.classList.toggle('on',window.scrollY>600);window.addEventListener('scroll',f,{passive:true});f();
 b.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});})();
 </script>
-
-<div id="lb" hidden><img alt=""></div>
 <script>
-const lb=document.getElementById('lb'),li=lb.querySelector('img');
-document.addEventListener('click',e=>{const t=e.target.closest('[data-zoom]');if(t){li.src=t.src;li.alt=t.alt;lb.hidden=false}});
-lb.addEventListener('click',()=>{lb.hidden=true});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.hidden=true});
+(function(){const b=document.getElementById('badge'),g=b&&b.querySelector('.spin');if(!g)return;
+let ang=0,v=16,target=16,last=performance.now(),hover=false;
+b.addEventListener('pointerenter',()=>hover=true);b.addEventListener('pointerleave',()=>hover=false);
+b.addEventListener('focus',()=>hover=true);b.addEventListener('blur',()=>hover=false);
+function f(t){const dt=Math.min(.05,(t-last)/1000);last=t;
+  target=document.body.classList.contains('calm')?0:(hover?90:16);
+  v+=(target-v)*Math.min(1,dt*(hover?2.2:1.1));
+  ang=(ang+v*dt)%360;g.setAttribute('transform','rotate('+ang.toFixed(2)+' 100 100)');requestAnimationFrame(f)}
+requestAnimationFrame(f);})();
+</script>
+
+<div id="lb" hidden role="dialog" aria-label="Перегляд фото">
+ <img alt="">
+ <button type="button" class="lbb lb-prev" aria-label="Попереднє фото"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+ <button type="button" class="lbb lb-next" aria-label="Наступне фото"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+ <button type="button" class="lbb lb-x" aria-label="Закрити"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+ <div class="lb-cap"><span class="lb-n"></span><span class="lb-t"></span></div>
+</div>
+<script>
+(function(){
+const lb=document.getElementById('lb'),li=lb.querySelector('img'),cn=lb.querySelector('.lb-n'),ct=lb.querySelector('.lb-t');
+let list=[],i=0;
+function vis(){return [...document.querySelectorAll('[data-zoom]')].filter(x=>!x.closest('#lb')&&x.offsetParent!==null)}
+function title(t){const a=t.closest('article');const h=a&&a.querySelector('.txt > h3');return h?h.textContent:(t.alt||'')}
+function show(){const t=list[i];li.src=t.src;li.alt=t.alt;cn.textContent=(i+1)+' / '+list.length;ct.textContent=title(t)}
+function go(d){if(!list.length)return;i=(i+d+list.length)%list.length;show()}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-zoom]');if(t&&!t.closest('#lb')){list=vis();i=Math.max(0,list.indexOf(t));show();lb.hidden=false}});
+lb.querySelector('.lb-prev').onclick=e=>{e.stopPropagation();go(-1)};
+lb.querySelector('.lb-next').onclick=e=>{e.stopPropagation();go(1)};
+lb.querySelector('.lb-x').onclick=e=>{e.stopPropagation();lb.hidden=true};
+li.onclick=e=>{e.stopPropagation();go(1)};
+lb.addEventListener('click',e=>{if(e.target===lb)lb.hidden=true});
+document.addEventListener('keydown',e=>{if(lb.hidden)return;if(e.key==='Escape')lb.hidden=true;if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)});
+let sx=null;lb.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+lb.addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)go(dx<0?1:-1);sx=null});
+})();
 </script>
 
 </body>
