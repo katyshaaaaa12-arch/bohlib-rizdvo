@@ -757,11 +757,12 @@ addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(px)}},{pass
 const vids=[...document.querySelectorAll('video')];if(!vids.length||!('IntersectionObserver' in window))return;
 vids.forEach(v=>{v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.preload='metadata'});
 let touched=new WeakSet();
-vids.forEach(v=>v.addEventListener('pause',()=>{if(!v.__auto)touched.add(v)}));
+vids.forEach(v=>{v.addEventListener('pause',()=>{if(v.__auto){v.__auto=0;return}touched.add(v)});v.addEventListener('play',()=>touched.delete(v))});
 const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;
-  if(e.isIntersecting&&e.intersectionRatio>=.6){if(touched.has(v))return;vids.forEach(o=>{if(o!==v&&!o.paused){o.__auto=1;o.pause();o.__auto=0}});const p=v.play();if(p&&p.catch)p.catch(()=>{})}
-  else if(!v.paused){v.__auto=1;v.pause();v.__auto=0;touched.delete(v)}
-}),{threshold:[0,.6]});
+  const vis=e.isIntersecting&&e.intersectionRect.height>=Math.min(e.boundingClientRect.height*.5,innerHeight*.45);
+  if(vis){if(touched.has(v))return;vids.forEach(o=>{if(o!==v&&!o.paused){o.__auto=1;o.pause()}});const p=v.play();if(p&&p.catch)p.catch(()=>{})}
+  else{if(!v.paused){v.__auto=1;v.pause()}if(!e.isIntersecting)touched.delete(v)}
+}),{threshold:[0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1]});
 vids.forEach(v=>io.observe(v));
 })();
 </script>
