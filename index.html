@@ -142,11 +142,11 @@ footer{background:var(--brand);color:var(--onbrand)}
 .brand-h .bo{width:calc(var(--lw)*.3584);height:auto;display:block}
 .brand-h span{font-family:"Playfair Display",Georgia,serif;font-weight:900;font-size:1em;line-height:1}
 .foot-logo{width:200px;max-width:100%;height:auto;display:block;margin-bottom:6px}
-.badge{all:unset;cursor:pointer;width:clamp(170px,22vw,240px);aspect-ratio:1;border-radius:50%;display:block;position:relative;z-index:1;filter:drop-shadow(0 10px 24px rgba(0,0,0,.3));}
+.badge{all:unset;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent;width:clamp(170px,22vw,240px);aspect-ratio:1;border-radius:50%;display:block;position:relative;z-index:1;filter:drop-shadow(0 10px 24px rgba(0,0,0,.3));}
 
 .badge:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
 .badge svg{width:100%;height:100%;display:block}
-.spin{transform-origin:100px 100px}
+.spin{transform-origin:100px 100px;transform-box:view-box}
 
 .swing{transform-origin:100px 118px;animation:swing 3.2s ease-in-out infinite}
 .tw{animation:tw 2.4s ease-in-out infinite}
@@ -575,7 +575,7 @@ function mk(top){return{x:Math.random()*W,y:top?-10-Math.random()*H*.5:Math.rand
 function base(){return Math.round(Math.min(90,Math.max(35,W*H/18000)))}
 function fill(){while(flakes.length<base()+extra)flakes.push(mk(false))}
 size();fill();
-let holes=[],soft=[],dark=[],pageDark=false;
+let holes=[],soft=[],dark=[],pageDark=false,boost=1;
 function rects(sel){const out=[];document.querySelectorAll(sel).forEach(e=>{if(e.offsetParent===null&&e.id!=='lb')return;const r=e.getBoundingClientRect();if(r.width&&r.bottom>0&&r.top<H&&r.right>0&&r.left<W)out.push({x:r.left,y:r.top,w:r.width,h:r.height})});return out}
 function scan(){const out=rects('figure img, video, .badge, #lb, #elf');soft=rects('.txt > *, .intro, .tag, h1, h2, h3, .lede, .motto, .swatches > *, header nav a, .toplogo > *, .fwrap > *, .tbl, .pins > *, .sel-list > *, .plan > li, .empty, .note, .actions > *, .ccgrid figcaption, .prog, .datel, .datei, #bar > *, .foot-logo, #elf-say');holes=out;const dk=[];document.querySelectorAll('header, footer, #bar').forEach(e=>{if(e.hidden)return;const r=e.getBoundingClientRect();if(r.height&&r.bottom>0&&r.top<H)dk.push(r)});dark=dk;const m=getComputedStyle(document.body).backgroundColor.match(/\d+/g);pageDark=!!m&&(0.299*m[0]+0.587*m[1]+0.114*m[2])<110}
 let pend=false;const req=()=>{if(!pend){pend=true;requestAnimationFrame(()=>{pend=false;scan()})}};
@@ -584,7 +584,8 @@ function tick(){
   if(!calm){
     ctx.clearRect(0,0,W,H);
     ctx.save();ctx.beginPath();ctx.rect(0,0,W,H);for(const r of holes)ctx.rect(r.x,r.y,r.w,r.h);ctx.clip('evenodd');
-    for(const f of flakes){f.y+=f.v;f.s+=.012;f.x+=Math.sin(f.s)*f.w;
+    boost+=((window.__bohHover?1.2:1)-boost)*.035;
+    for(const f of flakes){f.y+=f.v*boost;f.s+=.012*boost;f.x+=Math.sin(f.s)*f.w*Math.min(boost,1.8);
       if(f.y>H+8){if(extra>0&&flakes.length>base()){f.dead=1;extra--}else Object.assign(f,mk(true))}
       if(f.x>W+8)f.x=-8;if(f.x<-8)f.x=W+8;
       const inT=soft.some(r=>f.x>=r.x&&f.x<=r.x+r.w&&f.y>=r.y&&f.y<=r.y+r.h);
@@ -676,12 +677,15 @@ b.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});})();
 <script>
 (function(){const b=document.getElementById('badge'),g=b&&b.querySelector('.spin');if(!g)return;
 let ang=0,v=16,target=16,last=performance.now(),hover=false;
-b.addEventListener('pointerenter',()=>hover=true);b.addEventListener('pointerleave',()=>hover=false);
+const on=()=>{hover=true;window.__bohHover=true},off=()=>{hover=false;window.__bohHover=false};
+b.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')on()});b.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse')off()});
+b.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')on()});['pointerup','pointercancel'].forEach(t=>b.addEventListener(t,e=>{if(e.pointerType!=='mouse')off()}));
+b.addEventListener('contextmenu',e=>e.preventDefault());
 b.addEventListener('focus',()=>hover=true);b.addEventListener('blur',()=>hover=false);
 function f(t){const dt=Math.min(.05,(t-last)/1000);last=t;
   target=document.body.classList.contains('calm')?0:(hover?90:16);
   v+=(target-v)*Math.min(1,dt*(hover?2.2:1.1));
-  ang=(ang+v*dt)%360;g.setAttribute('transform','rotate('+ang.toFixed(2)+' 100 100)');requestAnimationFrame(f)}
+  ang=(ang+v*dt)%360;g.style.transform='rotate('+ang.toFixed(2)+'deg)';requestAnimationFrame(f)}
 requestAnimationFrame(f);})();
 </script>
 
