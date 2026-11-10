@@ -67,9 +67,11 @@ li.bought .nm b,li.bought .q{text-decoration:line-through;color:var(--muted)}
 aside{position:sticky;top:16px;display:grid;gap:14px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
 .card h3{font:700 18px var(--serif);margin:0 0 8px}
-.card ul{margin:0;padding-left:18px}
-.card li{margin:4px 0}
-.card li.ok{color:var(--muted);text-decoration:line-through}
+.card ul{margin:0;padding:0;list-style:none}
+.card li{margin:0;display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;align-items:start;padding:6px 0}
+.card li input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--brand);cursor:pointer}
+.card li label{cursor:pointer}
+.card li.ok label{color:var(--muted);text-decoration:line-through}
 .big{display:flex;gap:10px;margin:4px 0 12px}
 .big div{flex:1;background:var(--bg);border-radius:10px;padding:10px 12px}
 .big b{display:block;font:700 22px var(--serif);font-variant-numeric:tabular-nums}
@@ -216,7 +218,7 @@ function render(){
  const all=Z.flatMap(z=>active(z).map(r=>({r,z})));
  const sum=ids=>{let a=0,b=0;for(const {r} of all)if(ids.includes(r[0])){const[x,y]=range(r[2]);a+=x;b+=y}return a===b?fmt(a):fmt(a)+'–'+fmt(b)};
 
- const fill=(id,kind)=>{const ul=document.getElementById(id);ul.textContent='';for(const {r,z} of all){if(r[4]!==kind)continue;const li=el('li',S.b[r[0]]?'ok':'',r[1]+' — '+r[2]+' '+r[3]+' ('+z.t.split(' · ')[0]+')');ul.appendChild(li)}};
+ const fill=(id,kind)=>{const ul=document.getElementById(id);ul.textContent='';for(const {r,z} of all){if(r[4]!==kind)continue;const on=!!S.b[r[0]];const li=el('li',on?'ok':'');const cb=el('input');cb.type='checkbox';cb.id='s-'+r[0];cb.checked=on;cb.onchange=()=>{if(cb.checked)S.b[r[0]]=1;else delete S.b[r[0]];save();render()};const lb=el('label',null,r[1]+' — '+r[2]+' '+r[3]+' ('+z.t.split(' · ')[0]+')');lb.htmlFor=cb.id;li.append(cb,lb);ul.appendChild(li)}};
  fill('flor','f');fill('deco','d');
 
 }
