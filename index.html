@@ -556,7 +556,7 @@ for(const id of ['bukety','dveri','inshe']){const sec=document.getElementById(id
     if(el.matches('h3.vsub')){const d=document.createElement('div');d.className='mh';d.textContent=el.textContent.replace(/:.*$/,'');nav.appendChild(d)}
     else{const h=el.querySelector('.txt > h3');if(h)a('#'+el.id,h.textContent,'sub').dataset.k=el.id.slice(3)}})}
 const l=a('#razom','Мій список ','grp');const sp=document.createElement('span');sp.className='mcount';sp.id='m-count';l.appendChild(sp);
-a('#plan','План монтажу','grp');a('#piny','Pinterest','grp');
+a('#plan','План монтажу','grp');a('#piny','Pinterest','grp');const sl=a('https://katyshaaaaa12-arch.github.io/bohlib-rizdvo/spysok.html','Що докупити ↗','grp sw-site');
 })();
 </script>
 <script>
@@ -662,7 +662,7 @@ function hide(byClick){
   setTimeout(()=>{say.classList.remove('on');e.classList.remove('on');setTimeout(()=>{e.hidden=true;showing=false},800)},byClick?1300:0)}
 e.addEventListener('click',()=>hide(true));
 window.addEventListener('resize',()=>{if(showing)place()});
-(function sch(d){setTimeout(()=>{show();sch((5+Math.random()*2)*60*1000)},d)})(60*1000);
+
 window.bohlibElf=show;
 })();
 </script>
@@ -890,6 +890,8 @@ body.calm .menu-garl .gl{animation:none}
 #bar #bar-pop a{background:none;padding:8px 0;border-radius:0;font-weight:500;color:#1f3b34}
 </style>
 <style>body.pop-open #totop{opacity:0!important;pointer-events:none!important}</style>
+<style>#menu a.sw-site{margin-top:14px;background:var(--brand);color:var(--onbrand)!important;border-radius:8px!important;border-top:0!important;padding:12px 14px!important}#menu a.sw-site::before{filter:brightness(1.4)}</style>
+<style>#elf,#elf-say{display:none!important}</style>
 
 <div id="lb" hidden role="dialog" aria-label="Перегляд фото">
  <img alt="">

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Закупівля БоХліб</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Golos+Text:wght@400;500;600&display=swap">
+<style>
+/* Layout: green header with progress, then one card per zone; sticky florist summary on wide screens */
+:root{
+ --bg:#f7f5f0;--surface:#fffdf8;--fg:#1f3b34;--muted:#5d716b;--line:#e4ded2;
+ --brand:#285549;--onbrand:#f3efe6;--velvet:#8e1b24;--gold:#b38a35;--have:#2f6b45;
+ --serif:"Lora",Georgia,serif;--sans:"Golos Text",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a18;--surface:#1a2522;--fg:#ece7dc;--muted:#a3b2ac;--line:#2c3a36;--brand:#1d3f36;--velvet:#e07a83;--gold:#d6ad5a;--have:#8fd3a5;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121a18;--surface:#1a2522;--fg:#ece7dc;--muted:#a3b2ac;--line:#2c3a36;--brand:#1d3f36;--velvet:#e07a83;--gold:#d6ad5a;--have:#8fd3a5;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 var(--sans);margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{position:relative;overflow:hidden;color:#f3efe6;background:radial-gradient(55% 70% at 88% 18%,rgba(233,201,138,.20),transparent 62%),radial-gradient(70% 90% at -5% 105%,rgba(142,27,36,.55),transparent 60%),radial-gradient(50% 60% at 45% 55%,rgba(63,120,98,.35),transparent 70%),linear-gradient(165deg,#2c5c4f,#163830)}
+header::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+header>.wrap{position:relative;z-index:1;padding-bottom:64px!important}
+.hwave{position:absolute;left:0;right:0;bottom:-1px;height:40px;z-index:2;display:block;width:100%;fill:var(--bg)}
+header .wrap{padding-block:34px 30px;display:grid;gap:14px}
+.toprow{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.back{color:#f3efe6;text-decoration:none;font:600 14px var(--sans);border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:7px 14px}
+.back:hover,.back:focus-visible{background:#f3efe6;color:#1f3b34;outline:none}
+.brand{font:700 13px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:#e9c98a}
+h1{font:700 clamp(30px,6vw,46px)/1.08 var(--serif);margin:0;text-wrap:balance}
+.lede{margin:0;max-width:60ch;opacity:.9;font-size:15px}
+.prog{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:4px}
+.bar{flex:1 1 220px;max-width:420px;height:10px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:#e9c98a;transition:width .3s}
+#prog-t{font-weight:600;font-variant-numeric:tabular-nums}
+main .wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:28px;padding-block:28px 60px;align-items:start}
+.zones{display:grid;gap:18px;min-width:0}
+.zone{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 18px 10px}
+.zone h2{font:700 22px/1.2 var(--serif);margin:0 0 4px;display:flex;align-items:center;gap:10px}
+.zone h2::before{content:"";width:14px;height:20px;flex:0 0 auto;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 32'><path d='M12 31 V9' stroke='%23b88a2f' stroke-width='1.8' stroke-linecap='round'/><g fill='%23d6a447'><ellipse cx='12' cy='5' rx='2.6' ry='4.2'/><ellipse cx='8.6' cy='11' rx='2.4' ry='4.2' transform='rotate(-30 8.6 11)'/><ellipse cx='15.4' cy='11' rx='2.4' ry='4.2' transform='rotate(30 15.4 11)'/><ellipse cx='8.6' cy='17.5' rx='2.4' ry='4.2' transform='rotate(-30 8.6 17.5)'/><ellipse cx='15.4' cy='17.5' rx='2.4' ry='4.2' transform='rotate(30 15.4 17.5)'/><ellipse cx='8.6' cy='24' rx='2.4' ry='4.2' transform='rotate(-30 8.6 24)'/><ellipse cx='15.4' cy='24' rx='2.4' ry='4.2' transform='rotate(30 15.4 24)'/></g></svg>") center/contain no-repeat}
+.zone .zcount{margin-left:auto;font:600 13px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
+.zone .note{margin:0 0 10px;color:var(--muted);font-size:14px}
+.zone.done{border-color:color-mix(in srgb,var(--have) 45%,var(--line))}
+.zone.done .zcount{color:var(--have)}
+.choice{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.choice button{font:500 14px var(--sans);border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:999px;padding:7px 14px;cursor:pointer}
+.choice button[aria-pressed="true"]{background:var(--brand);color:var(--onbrand);border-color:var(--brand)}
+ul.items{list-style:none;margin:0;padding:0}
+ul.items li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--line)}
+ul.items li:first-child{border-top:0}
+ul.items input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--brand);cursor:pointer}
+.nm{min-width:0}
+.nm b{font-weight:500}
+.nm small{display:block;color:var(--muted);font-size:13px;line-height:1.35;margin-top:2px}
+.q{font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
+.tag{display:inline-block;font:600 11px var(--sans);letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:1px}
+.t-f{background:color-mix(in srgb,var(--have) 14%,transparent);color:var(--have)}
+.t-d{background:color-mix(in srgb,var(--gold) 16%,transparent);color:var(--gold)}
+li.have{opacity:.62}
+li.from{opacity:1}li.from .q{color:var(--gold)}
+li.have .q{color:var(--have)}
+li.bought .nm b,li.bought .q{text-decoration:line-through;color:var(--muted)}
+aside{position:sticky;top:16px;display:grid;gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card h3{font:700 18px var(--serif);margin:0 0 8px}
+.card ul{margin:0;padding-left:18px}
+.card li{margin:4px 0}
+.card li.ok{color:var(--muted);text-decoration:line-through}
+.big{display:flex;gap:10px;margin:4px 0 12px}
+.big div{flex:1;background:var(--bg);border-radius:10px;padding:10px 12px}
+.big b{display:block;font:700 22px var(--serif);font-variant-numeric:tabular-nums}
+.big span{font-size:13px;color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font:600 14px var(--sans);border:0;border-radius:8px;padding:10px 14px;cursor:pointer;background:var(--brand);color:var(--onbrand)}
+.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.btn:focus-visible,.choice button:focus-visible,ul.items input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#msg{font-size:13px;color:var(--muted);min-height:1.2em;margin-top:6px}
+#fb{width:100%;min-height:180px;margin-top:8px;font:13px/1.5 var(--sans);padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--fg)}
+.hint{font-size:13px;color:var(--muted);margin:0}
+.nm a.buy{display:inline-block;margin-top:4px;font-size:13px;font-weight:600;color:var(--velvet)}
+.price{margin:0 0 10px;font:700 17px var(--serif);color:var(--fg)}
+@media (max-width:860px){main .wrap{grid-template-columns:1fr}aside{position:static;order:-1}}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%23856a2a' stroke-width='2' stroke-linecap='round'><path d='M30 110 L30 40'/><path d='M30 50 q-10 -6 -10 -16 q10 4 10 16 M30 50 q10 -6 10 -16 q-10 4 -10 16 M30 66 q-10 -6 -10 -16 q10 4 10 16 M30 66 q10 -6 10 -16 q-10 4 -10 16 M30 82 q-10 -6 -10 -16 q10 4 10 16 M30 82 q10 -6 10 -16 q-10 4 -10 16'/><ellipse cx='100' cy='96' rx='22' ry='13'/><path d='M88 92 l6 -6 M98 94 l6 -6 M108 96 l6 -6'/></g></svg>") 0 0/140px 140px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body::before{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'><path d='M30 110 L30 40'/><path d='M30 50 q-10 -6 -10 -16 q10 4 10 16 M30 50 q10 -6 10 -16 q-10 4 -10 16 M30 66 q-10 -6 -10 -16 q10 4 10 16 M30 66 q10 -6 10 -16 q-10 4 -10 16 M30 82 q-10 -6 -10 -16 q10 4 10 16 M30 82 q10 -6 10 -16 q-10 4 -10 16'/><ellipse cx='100' cy='96' rx='22' ry='13'/><path d='M88 92 l6 -6 M98 94 l6 -6 M108 96 l6 -6'/></g></svg>")}}
+:root[data-theme="dark"] body::before{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'><g fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'><path d='M30 110 L30 40'/><path d='M30 50 q-10 -6 -10 -16 q10 4 10 16 M30 50 q10 -6 10 -16 q-10 4 -10 16 M30 66 q-10 -6 -10 -16 q10 4 10 16 M30 66 q10 -6 10 -16 q-10 4 -10 16 M30 82 q-10 -6 -10 -16 q10 4 10 16 M30 82 q10 -6 10 -16 q-10 4 -10 16'/><ellipse cx='100' cy='96' rx='22' ry='13'/><path d='M88 92 l6 -6 M98 94 l6 -6 M108 96 l6 -6'/></g></svg>")}
+header,main{position:relative;z-index:1}
+main{background:transparent}
+</style>
+
+<header><svg class="hwave" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 L0 22 C150 4 300 4 450 18 C600 32 750 34 900 18 C1020 6 1110 6 1200 16 L1200 40 Z"/></svg><div class="wrap">
+ <div class="toprow"><div class="brand">БоХліб · Різдво 2026</div><a class="back" href="https://katyshaaaaa12-arch.github.io/bohlib-rizdvo/">← Ідеї та інструкції</a></div>
+ <h1>Що ще докупити</h1>
+ <p class="lede">Усе, що ми затвердили, по зонах. Ставте галочку, коли куплено. «Вже є» не рахується. Для каси та вулиці виберіть варіант, і список підлаштується.</p>
+ <div class="prog"><div class="bar"><i id="pbar"></i></div><span id="prog-t"></span></div>
+</div></header>
+
+<main><div class="wrap">
+ <div class="zones" id="zones"></div>
+ <aside>
+  <div class="card">
+   <h3>Шувар</h3>
+   <ul id="flor"></ul>
+  </div>
+  <div class="card">
+   <h3>Магазин декору</h3>
+   <ul id="deco"></ul>
+  </div>
+  <div class="card">
+   <div class="btns"><button type="button" class="btn" id="copy">Копіювати список</button><button type="button" class="btn ghost" id="reset">Скинути галочки</button></div>
+   <div id="msg" role="status"></div>
+   <textarea id="fb" hidden readonly aria-label="Список для копіювання"></textarea>
+   <p class="hint">Галочки зберігаються в цьому браузері. Щоб передати список, натисніть «Копіювати» і перешліть.</p>
+  </div>
+ </aside>
+</div></main>
+
+<script>
+(function(){
+/* [id, name, qty, unit, kind, note]  kind: f=флорист, d=декор, have=вже є */
+const Z=[
+ {id:'hv',t:'Хвоя',note:'В пучку 10–13 гілок. Уточнити довжину (для бару 60–80 см) і брати за 1–2 дні до монтажу.',items:[
+  ['hv_w','Веймутова сосна','1','пучок','f','бар — 8–10, букет 1 — 2–3'],
+  ['hv_y','Ялівець','1','пучок','f','букет 1 — 4–5, каса — 3, решта в запас'],
+  ['hv_e','Ялинка','1','пучок','f','столики — 1, букет 1 — 2, бар — 2, решта на вулицю. В теплі швидше осипається, тож у приміщенні потроху'],
+ ]},
+ {id:'stoly',t:'Столики · 9 ваз',note:'У кожну вазу одна гілочка хвої і щось червоне.',items:[
+  ['st_vaz','Маленькі вази','','','have'],
+  ['st_hv','1 гілка ялинки, розрізати на 9','з пучка','','from'],
+  ['st_il','Ілекс або інша гілка з червоними ягодами','1–2','гілки','f','розрізати на 9 гілочок'],
+ ]},
+ {id:'dz',t:'Дзеркало',note:'12 бантів: по 6 з кожного боку, по 2 м стрічки на бант. Кольори: бордовий, зелений, бежевий, по 4 банти кожного.',items:[
+  ['dz_b','Бежева стрічка на 4 банти','','','have'],
+  ['dz_r','Бордова стрічка на 4 банти','','','have'],
+  ['dz_g','Зелена оксамитова стрічка 3,8 см','8','м','d','4 банти × 2 м. На сайті треба вибрати колір. У рулоні приблизно 23 м, тож одного вистачить із запасом','https://svitmerezhyva.com/product/tasma-oksamit-3-8-sm-25-yardiv-93-temniy-zeleniy'],
+  ['dz_s','Двосторонній скотч','1','рулон','d'],
+ ]},
+ {id:'vz',t:'Вазони · 5 шт.',note:'Обгорнути мішковиною і перев\'язати стрічкою.',items:[
+  ['vz_m','Мішковина','','','have'],
+  ['vz_s','Тонка бордова стрічка (рулон ~30 м)','','','have'],
+ ]},
+ {id:'b1',t:'Букет 1 на стіл · з бавовною',note:'Як на першому фото.',items:[
+  ['b1_k','Кульки на паличці','','','have'],
+  ['b1_b','Бавовна','3','гілочки','f'],
+  ['b1_n','Ялівець 4–5 + веймутова сосна 2–3 + ялинка 2','з пучків','','from'],
+  ['b1_v','Ваза','','','have','взяти в Маші'],
+ ]},
+ {id:'b2',t:'Букет 2 на бар · звисаючий',note:'Як на другому фото: стрічки звисають до стійки.',items:[
+  ['b2_ig','Червона гілка (ілекс)','','','have'],
+  ['b2_dry','Суха гілка','','','have','взяти в Маші'],
+  ['b2_n','Веймутова сосна 8–10 + ялинка 2','з пучків','','from'],
+  ['b2_r','Тонка бордова стрічка, 6 шматків по 60–70 см','з рулону 30 м','','have'],
+  ['b2_v','Ваза','','','have'],
+ ]},
+ {id:'ks',t:'Каса',choice:['Міні-ялинки з велюру','Амариліс'],opts:[[
+  ['ks_k','Конус з пінопласту або картону, 20–30 см','3','шт.','d','різної висоти, як на фото: напр. 20, 25 і 30 см'],
+  ['ks_v','Зелена оксамитова стрічка 1,5–2 см','6','м','d','мотати спіраллю знизу вгору внахлест; якщо стрічка 1 см — брати 11 м'],
+  ['ks_g','Клейовий пістолет і стрижні','','','have'],
+ ],[
+  ['ks_a','Амариліс червоний','3','шт.','f'],
+  ['ks_h','Ялівець 3 гілочки','з пучка','','from'],
+  ['ks_av','Ваза','','','have'],
+ ]]},
+ {id:'vl',t:'Вулиця · кошик',choice:['Ялинка + гірлянда','Букет у кошику'],base:[
+  ['vl_k','Кошик','','','have'],
+ ],opts:[[
+  ['vl_y','Ялинка в горщику 60–90 см','1','шт.','f'],
+  ['vl_g','Вулична гірлянда на батарейках (IP44)','3–5','м','d'],
+  ['vl_b','Батарейки','1','уп.','d'],
+ ],[
+  ['vl_h','Ялинка 5–8 + решта ялівцю','з пучків','','from'],
+  ['vl_i','Ілекс','5–7','гілок','f'],
+  ['vl_sh','Шишки','5–7','шт.','d'],
+  ['vl_gb','Флористична губка або сітка','1','шт.','d'],
+  ['vl_pl','Плівка в кошик','','','have'],
+  ['vl_r','Гірлянда-роса на батарейках','3','м','d'],
+ ]]},
+];
+const HV=['hv_w','hv_y','hv_e'], IL=['st_il','b2_i','vl_i'];
+const KEY='bohlib-zakup-v1';let S={b:{},c:{ks:0,vl:0}};
+try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&x.b)S=x}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e};
+const range=q=>{const m=String(q).replace(',','.').split(/[–-]/).map(Number);return [m[0]||0,m[1]||m[0]||0]};
+const fmt=n=>String(Math.round(n*10)/10).replace('.',',');
+function active(z){let a=[...(z.base||[]),...(z.items||[])];if(z.opts)a=a.concat(z.opts[S.c[z.id]||0]);return a}
+function render(){
+ const box=document.getElementById('zones');box.textContent='';
+ let need=0,got=0;
+ for(const z of Z){
+  const sec=el('section','zone');const h=el('h2',null,z.t);const cnt=el('span','zcount');h.appendChild(cnt);sec.appendChild(h);
+  if(z.note)sec.appendChild(el('p','note',z.note));
+  if(z.choice){const c=el('div','choice');c.setAttribute('role','group');c.setAttribute('aria-label',z.t+': варіант');
+   z.choice.forEach((t,i)=>{const b=el('button',null,t);b.type='button';b.setAttribute('aria-pressed',(S.c[z.id]||0)===i);b.onclick=()=>{S.c[z.id]=i;save();render()};c.appendChild(b)});sec.appendChild(c)}
+  const ul=el('ul','items');let zn=0,zg=0;
+  for(const [id,name,q,u,k,note,url] of active(z)){
+   const li=el('li');const from=k==='from';const have=k==='have'||from;
+   const cb=el(from?'span':'input');if(!from){cb.type='checkbox'}cb.id='c-'+id;
+   if(from){li.classList.add('from')}else if(have){cb.checked=true;cb.disabled=true;li.classList.add('have')}else{cb.checked=!!S.b[id];zn++;if(cb.checked){zg++;li.classList.add('bought')}
+    cb.onchange=()=>{if(cb.checked)S.b[id]=1;else delete S.b[id];save();render()}}
+   const lab=el('label','nm');lab.htmlFor=cb.id;const b=el('b',null,name);lab.appendChild(b);
+   if(!have)lab.appendChild(el('span','tag '+(k==='f'?'t-f':'t-d'),k==='f'?'шувар':'декор'));
+   if(note)lab.appendChild(el('small',null,note));
+   if(url){const a=el('a','buy','Де купити ↗');a.href=url;a.target='_blank';a.rel='noopener';lab.appendChild(a)}
+   li.append(cb,lab,el('span','q',have?(q||'вже є'):q+' '+u));ul.appendChild(li);
+  }
+  need+=zn;got+=zg;cnt.textContent=zn?zg+' з '+zn:'все є';if(zg===zn)sec.classList.add('done');
+  sec.appendChild(ul);box.appendChild(sec);
+ }
+ document.getElementById('prog-t').textContent='Куплено '+got+' з '+need;
+ document.getElementById('pbar').style.width=(need?got/need*100:0)+'%';
+ // summaries
+ const all=Z.flatMap(z=>active(z).map(r=>({r,z})));
+ const sum=ids=>{let a=0,b=0;for(const {r} of all)if(ids.includes(r[0])){const[x,y]=range(r[2]);a+=x;b+=y}return a===b?fmt(a):fmt(a)+'–'+fmt(b)};
+
+ const fill=(id,kind)=>{const ul=document.getElementById(id);ul.textContent='';for(const {r,z} of all){if(r[4]!==kind)continue;const li=el('li',S.b[r[0]]?'ok':'',r[1]+' — '+r[2]+' '+r[3]+' ('+z.t.split(' · ')[0]+')');ul.appendChild(li)}};
+ fill('flor','f');fill('deco','d');
+
+}
+function text(){
+ let o='БоХліб · Різдво · що докупити\n';
+ for(const z of Z){const rows=active(z).filter(r=>r[4]!=='have'&&r[4]!=='from');if(!rows.length)continue;
+  o+='\n'+z.t+(z.choice?' ('+z.choice[S.c[z.id]||0]+')':'')+':\n';
+  for(const r of rows)o+=(S.b[r[0]]?'[x] ':'[ ] ')+r[1]+' — '+r[2]+' '+r[3]+'\n'}
+
+ return o}
+document.getElementById('copy').onclick=()=>{const t=text(),m=document.getElementById('msg'),fb=document.getElementById('fb');
+ const show=()=>{fb.hidden=false;fb.value=t;fb.focus();fb.select();m.textContent='Скопіюйте текст нижче вручну.'};
+ try{navigator.clipboard.writeText(t).then(()=>{m.textContent='Список скопійовано.';fb.hidden=true},show)}catch(e){show()}};
+let armed=false;document.getElementById('reset').onclick=e=>{const b=e.currentTarget,m=document.getElementById('msg');
+ if(!armed){armed=true;b.textContent='Точно скинути?';m.textContent='Натисніть ще раз, щоб зняти всі галочки.';setTimeout(()=>{armed=false;b.textContent='Скинути галочки'},4000);return}
+ armed=false;S.b={};save();render();b.textContent='Скинути галочки';m.textContent='Галочки скинуто.'};
+render();
+})();
+</script>
+
+</body>
+</html>
